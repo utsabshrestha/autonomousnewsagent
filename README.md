@@ -108,9 +108,3 @@ npm start
 
 MIT License.
 
----
-
-### Tips for your Github Upload:
-1.  **Generate that Mermaid Diagram:** GitHub renders the text inside the `mermaid` block as a real diagram automatically!
-2.  **Screenshots:** Since you built a UI, **take a screenshot**. A project with a screenshot gets 10x more views than one without.
-3.  **Clean Code:** Before uploading, run `pip freeze > requirements.txt` in your backend folder so others can install your libraries easily.
