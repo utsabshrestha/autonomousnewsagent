@@ -1,0 +1,4 @@
+.env
+.vscode
+venv
+to activate api key in terminal
