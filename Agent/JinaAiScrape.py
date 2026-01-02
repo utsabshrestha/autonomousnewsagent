@@ -109,7 +109,7 @@ def extract_main_image_url(markdown_text: str) -> str:
         
         # Valid extensions for a "main" news image
         # We skip .svg because they are usually logos/icons, not news photos
-        valid_extensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif']
+        valid_extensions = ['.jpg', '.jpeg', '.webp', '.gif']
         
         for img_url in image_patterns:
             # Check 1: Does it look like an image file?

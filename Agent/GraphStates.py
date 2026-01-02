@@ -24,7 +24,7 @@ class AgentState(TypedDict):
     topic : str
 
     # 2. Planner node, list of search quries design by Gemini
-    search_queries: Annotated[List[SearchQuery], operator.add]
+    search_queries: List[SearchQuery]
 
     # 3. Search results from Brave API
     search_results: Annotated[List[SearchResult], operator.add]

@@ -17,16 +17,16 @@ async def news_event_stream_generator(topic: str):
                 yield f"data:{json.dumps({'type': 'log','message': message}) }\n\n"
             elif node_name == "gather_results":
                 results = state_update.get("search_results", [])
-                message = f"Searching web ... \n found {len(results)} raw web pages."
-                yield f"data:{json.dumps({'type':'log', 'message':message})}"
+                message = f"Searching web ... \n found {len(results) if len(results) > 0 else 0} raw web pages."
+                yield f"data:{json.dumps({'type':'log', 'message':message})}\n\n"
             elif node_name == "deduplicate":
                 count = len(state_update.get("refined_search_results", []))
-                message = f"Refining Search Results...\n Removing duplicates. {count} unique search results remain."
+                message = f"Refining Search Results...\n Removing duplicates. \n {count} unique search results remain."
                 yield f"data:{json.dumps({'type':'log', 'message': message})}\n\n"
             elif node_name == "SearchResultsEvaluation":
                 good_urls = state_update.get("selected_urls", [])
                 bad_urls = state_update.get("discarded_urls", [])
-                message = f"Analyzing search results...\n found {len(good_urls)} relevant sources. \n Rejected {len(bad_urls)} irrelevant ones."
+                message = f"Analyzing search results...\n found {len(good_urls) if len(good_urls) > 0 else 0} relevant sources. \n Rejected {len(bad_urls) if len(bad_urls) > 0 else 0} irrelevant ones."
                 yield f"data:{json.dumps({'type':'log', 'message':message})}\n\n"
             elif node_name == "ScrapeDispatch":
                 mesage = "Launching parallel scrappers..."

@@ -25,15 +25,20 @@ export const useAgentStream = () => {
         const eventSource = new EventSource(`http://localhost:8000/stream?topic=${encodeURIComponent(topic)}`);
 
         eventSource.onmessage = (event) => {
-            const parsedData = JSON.parse(event.data);
-
-            if(parsedData.type === 'log'){
-                setLogs(prev => [...prev, parsedData.message]);
-            }else if(parsedData.type === 'result'){
-                setReport(parsedData.markdown);
-                setSources(parsedData.sources);
-                setStatus("finished");
-                eventSource.close();
+            try{
+                const parsedData = JSON.parse(event.data);
+    
+                if(parsedData.type === 'log'){
+                    setLogs(prev => [...prev, parsedData.message]);
+                }else if(parsedData.type === 'result'){
+                    setReport(parsedData.markdown);
+                    setSources(parsedData.sources);
+                    setStatus("finished");
+                    eventSource.close();
+                }
+            }
+            catch(exec){
+                console.log(exec);
             }
         };
 

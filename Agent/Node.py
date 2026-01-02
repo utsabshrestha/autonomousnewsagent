@@ -80,7 +80,17 @@ def PlannerNode(state: AgentState) -> dict :
         searchQueries.append(new_query)
 
     # 7. Update the State
-    return {"search_queries": searchQueries}
+    # return {"search_queries": searchQueries}
+    return {"search_queries": [{
+            "query": "Nepal politics 2025",
+            "id": uuid.uuid4().hex[:8]
+        }, {
+            "query": "Iceland visit 2025",
+            "id": uuid.uuid4().hex[:8]
+        }, {
+            "query": "Open Ai stock",
+            "id": uuid.uuid4().hex[:8]
+        }]}
 
 
 
@@ -174,7 +184,7 @@ def SearchResultsEvaluationNode(state: AgentState) -> dict:
             if result["id"] in valid_ids:
                 good_results.append(result)
             else:
-                bad_results.append(result)
+                bad_results.append(result["url"])
     except Exception as e:
         print(f"Error parsing filter: {e}")
         good_results = [] # Fail safe
