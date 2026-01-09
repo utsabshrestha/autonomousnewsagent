@@ -87,25 +87,9 @@ def PlannerNode(state: AgentState) -> dict :
             "id": uuid.uuid4().hex[:8]
         }
         searchQueries.append(new_query)
-    if loop_step == 0 and len(searchQueries) >= 3:
-        searchQueries[1]["query"] = "Nepal Government 2026"
-        searchQueries[2]["query"] = "USA Government 2026"
 
     #7. Update the State
     return {"search_queries": searchQueries, "loop_step": loop_step + 1}
-    # return {"search_queries": [{
-    #         "query": "Nepal politics 2025",
-    #         "id": uuid.uuid4().hex[:8]
-    #     }, {
-    #         "query": "Iceland visit 2025",
-    #         "id": uuid.uuid4().hex[:8]
-    #     }, {
-    #         "query": "Open Ai stock",
-    #         "id": uuid.uuid4().hex[:8]
-    #     }, {
-    #         "query": "Nepal stock",
-    #         "id": uuid.uuid4().hex[:8]
-    #     }]}
 
 def SearchNodeSynchrous(state : AgentState) -> dict:
     searchResults: List[SearchResult] = []
@@ -259,7 +243,9 @@ def ScrapeNode(state: SearchResult) -> dict:
             "source": state,
             "image_url": scrapedContent["image_url"]
         }
-        return {"scraped_contents": [content]}
+        scrapedContentList : List[ScrapedContent] = []
+        scrapedContentList.append(content)
+        return {"scraped_contents": scrapedContentList}
     return {"scraped_contents": []}
 
 def Route_to_ScrapeNode(state: AgentState) -> List[Send]:
@@ -302,15 +288,20 @@ def ReporterNode(state: AgentState) -> dict:
 
     CRITICAL INSTRUCTIONS:
     1. **Synthesis**: Do not just list summaries. Combine facts from multiple sources to build a narrative.
-    2. **Citations**: You MUST cite your sources using bracketed IDs like [1], [2]. 
+    2. **Citations**: You must use **Standard Markdown Footnotes** for citations. In the text, use this format: "Quantum computers are fast[^1]." 
+       (Notice the caret ^ inside the brackets).
+       - If there are multiple sources, use: "Scientists agree[^2][^3]."
        - Every factual claim must be backed by a citation.
-       - Example: "NVIDIA shares dropped 5% [1], despite record earnings [2]."
-    3. **Verification**: If sources disagree (e.g., Source [1] says 'Safe' and Source [2] says 'Dangerous'), you must mention the conflict explicitly.
+       - Example: "NVIDIA shares dropped 5% [^1], despite record earnings [^2]."
+    3. **Verification**: If sources disagree (e.g., Source [^1] says 'Safe' and Source [^2] says 'Dangerous'), you must mention the conflict explicitly.
     4. **Structure**: 
        - Use a Main Headline.
        - Use an Executive Summary (bullet points).
        - Use Detailed Sections for deep analysis.
        - End with a "Sources" list.
+    5. At the very bottom of the report, list the sources using the footnote definition format:
+       [^1]: Source Name, "Article Title", Date. URL
+       [^2]: Source Name, "Article Title", Date. URL
     """
 
     user_message = f"User Topic: {topic}\n\nRAW DATA:\n{context_str}"

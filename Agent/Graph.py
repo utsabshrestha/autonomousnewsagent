@@ -8,7 +8,7 @@ builder.add_node("planner", node.PlannerNode)
 builder.add_node("SearchNode", node.SearchNodeSynchrous)
 builder.add_node("deduplicate", node.RemoveDuplicateSearchResults)
 builder.add_node("SearchResultsEvaluation", node.SearchResultsEvaluationNode)
-builder.add_node("ScrapeDispatch", lambda state: state)
+builder.add_node("ScrapeDispatch", lambda state: {})
 builder.add_node("ScrapeNode", node.ScrapeNode)
 builder.add_node("ReporterNode", node.ReporterNode)
 
