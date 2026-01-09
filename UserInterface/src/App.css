@@ -292,3 +292,177 @@ body {
   color: #475569;
   font-style: italic;
 }
+
+/* The Citation Number in the text */
+.markdown-paper sup {
+  background-color: #e0f2fe;
+  color: #0284c7;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.75rem;
+  margin-left: 2px;
+  cursor: pointer;
+}
+
+.markdown-paper sup a {
+  text-decoration: none !important; /* Remove underline from number */
+  color: inherit !important;
+}
+
+/* The Footnotes Section at the bottom */
+.markdown-paper section[data-footnotes] {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.markdown-paper section[data-footnotes] ol {
+  padding-left: 20px;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.markdown-paper section[data-footnotes] li {
+  margin-bottom: 10px;
+}
+
+/* === STATUS FEED (Perplexity Style) === */
+.status-feed-container {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.status-feed-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: #334155;
+  text-align: center;
+}
+
+.feed-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+}
+
+/* The vertical connecting line */
+.feed-steps::before {
+  content: '';
+  position: absolute;
+  left: 20px; /* Aligns with center of icons */
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: #e2e8f0;
+  z-index: 0;
+}
+
+.step-item {
+  display: flex;
+  gap: 20px;
+  position: relative;
+  z-index: 1; /* Puts items above the line */
+}
+
+.step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #64748b;
+}
+
+.icon-blue { color: #2563eb; }
+.icon-green { color: #10b981; }
+.spin { animation: spin 2s linear infinite; color: var(--primary); }
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h3 {
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* STEP 1: PILLS */
+.query-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  background: #f1f5f9;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+/* STEP 2: SOURCE CARDS */
+.sources-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.mini-source-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.favicon {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+}
+
+.source-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.source-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  color: #334155;
+}
+
+.source-domain {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.more-count {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 5px;
+}

@@ -5,6 +5,7 @@ import SearchHero from './components/SearchHero';
 import TerminalView from './components/TerminalView';
 import ReportDashboard from './components/ReportDashboard';
 import { useAgentStream } from './hooks/useAgentStream';
+import StatusFeed from './components/StatusFeed';
 
 function App() {
   const [topic, setTopic] = useState("");
@@ -13,19 +14,21 @@ function App() {
   // get reference form the custom hooks.
   const {
     status,
-      logs,
       report,
       sources,
+      searchQueries,
+      foundUrls,
+      currentAction,
       startStream,
       resetStream
   } = useAgentStream();
 
   // auto scroll 
-  useEffect(() => {
-    if(status === 'processing' && logsEndRef.current){
-      logsEndRef.current.scrollIntoView({behavior: "smooth"});
-    }
-  }, [logs, status]);
+  // useEffect(() => {
+  //   if(status === 'processing' && logsEndRef.current){
+  //     logsEndRef.current.scrollIntoView({behavior: "smooth"});
+  //   }
+  // }, [logs, status]);
 
   // Handler wrapper
   const handleStart = () => {
@@ -48,10 +51,11 @@ function App() {
       )}
 
       {status === 'processing' && (
-        <TerminalView 
-          topic={topic} 
-          logs={logs} 
-          logsEndRef={logsEndRef} 
+         <StatusFeed 
+          topic={topic}
+          queries={searchQueries}
+          foundUrls={foundUrls}
+          currentAction={currentAction}
         />
       )}
 

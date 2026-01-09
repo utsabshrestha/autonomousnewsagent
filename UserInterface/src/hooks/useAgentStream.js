@@ -13,6 +13,11 @@ export const useAgentStream = () => {
     //hold all the sources of the report for the references
     const [sources, setSources] = useState([]);
 
+    const [searchQueries, setSearchQueries] = useState([]);
+    const [foundUrls, setFoundUrls] = useState([]); // The list of 15+ sources found
+    const [currentAction, setCurrentAction] = useState(""); // "Reading: cnn.com..."
+
+
     //event connection 
     const startStream = (topic) => {
         if (!topic.trim()) return;
@@ -21,6 +26,9 @@ export const useAgentStream = () => {
         setLogs([]);
         setReport("");
         setSources([]);
+        setSearchQueries([]);
+        setFoundUrls([]);
+        setCurrentAction("Initializing Agent...");
 
         const eventSource = new EventSource(`http://localhost:8000/stream?topic=${encodeURIComponent(topic)}`);
 
@@ -29,7 +37,18 @@ export const useAgentStream = () => {
                 const parsedData = JSON.parse(event.data);
     
                 if(parsedData.type === 'log'){
-                    setLogs(prev => [...prev, parsedData.message]);
+                    if (parsedData.step === 'planner') {
+                        setSearchQueries(parsedData.details);
+                        setCurrentAction("Generating Search Queries...");
+                    } 
+                    else if (parsedData.step === 'sources') {
+                        setFoundUrls(parsedData.details);
+                        setCurrentAction("Reviewing Sources...");
+                    }
+                    else if (parsedData.step === 'scraping') {
+                        setCurrentAction(`Reading: ${new URL(parsedData.details).hostname}...`);
+                    }
+                
                 }else if(parsedData.type === 'result'){
                     setReport(parsedData.markdown);
                     setSources(parsedData.sources);
@@ -63,9 +82,11 @@ export const useAgentStream = () => {
 
     return {
         status,
-        logs,
         report,
         sources,
+        searchQueries,     
+        foundUrls,       
+        currentAction,         
         startStream,
         resetStream
     };

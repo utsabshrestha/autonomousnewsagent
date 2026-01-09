@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Globe, RefreshCcw, FileText } from 'lucide-react';
+import remarkGfm from 'remark-gfm'; 
 
 const ReportDashboard = ({ report, sources, resetSearch }) => {
   return (
@@ -44,7 +45,35 @@ const ReportDashboard = ({ report, sources, resetSearch }) => {
 
         {/* 2. MAIN MARKDOWN REPORT */}
         <div className="markdown-paper">
-          <ReactMarkdown>{report}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} 
+         components={{
+              // NEW LOGIC HERE
+              a: ({node, ...props}) => {
+                // Check if it's an internal anchor link (Footnote)
+                const isFootnote = props.href && props.href.startsWith('#');
+                
+                if (isFootnote) {
+                  // For footnotes, just use normal behavior (scroll)
+                  return (
+                    <a 
+                      {...props} 
+                      style={{color: '#2563eb', textDecoration: 'none', cursor: 'pointer'}} 
+                    />
+                  );
+                } else {
+                  // For external websites, open in new tab
+                  return (
+                    <a 
+                      {...props} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      style={{color: '#2563eb', textDecoration: 'underline'}} 
+                    />
+                  );
+                }
+              }
+            }}
+            >{report}</ReactMarkdown>
         </div>
       </div>
     </div>
