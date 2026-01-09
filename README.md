@@ -36,16 +36,63 @@ The system follows a strict graph topology to ensure reliability:
 
 ```mermaid
 graph TD
-    A[User Topic] --> B(Planner Node)
-    B --> C{Search Node}
-    C --> D[Deduplication & Blacklist]
-    D --> E(Evaluator Node)
-    E --> F{Sufficient Info?}
-    F -- No --> B
-    F -- Yes --> G[Parallel Scraper Dispatch]
-    G --> H(Scrape Node 1) & I(Scrape Node 2) & J(Scrape Node 3)
-    H & I & J --> K(Reporter Node)
-    K --> L[Final Briefing]
+    %% --- STYLING DEFINITIONS ---
+    classDef ai fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000;
+    classDef logic fill:#fffde7,stroke:#fbc02d,stroke-width:2px,color:#000;
+    classDef ui fill:#333,stroke:#000,stroke-width:2px,color:#fff;
+
+    subgraph LLM
+        Gemini{{Google Gemini 2.0 Flash}}
+    end
+
+    %% --- NODES ---
+    User((User Topic)):::ui
+    Planner(Planner Node):::ai
+    
+    %% Research Phase
+    Router{Search Router}:::logic
+    S1[Search Node 1]:::logic
+    S2[Search Node 2]:::logic
+    S3[Search Node 3]:::logic
+    
+    Dedupe[Deduplication & Blacklist]:::logic
+    Evaluator(Evaluator Node):::ai
+    Check{Sufficient Info?}:::logic
+    
+    %% Extraction Phase
+    Dispatch[Scraper Dispatch]:::logic
+    Scrape1[Scrape Node 1]:::logic
+    Scrape2[Scrape Node 2]:::logic
+
+    %% Synthesis Phase
+    Reporter(Reporter Node):::ai
+    Final[Final Briefing UI]:::ui
+
+    %% --- FLOW CONNECTIONS ---
+    User --> Planner
+    Planner --> Router
+    
+    %% Parallel Search
+    Router --> S1 & S2 & S3
+    S1 & S2 & S3 --> Dedupe
+    
+    Dedupe --> Evaluator
+    Evaluator --> Check
+    
+    %% The Feedback Loop
+    Check -- No / Retry --> Planner
+    
+    %% The Success Path
+    Check -- Yes --> Dispatch
+    Dispatch --> Scrape1 & Scrape2
+    
+    Scrape1 --> Reporter
+    Scrape2 --> Reporter
+    Reporter --> Final
+   
+   Planner o-.-o Gemini
+Evaluator o-.-o Gemini
+
 ```
 
 ### Node Breakdown
@@ -63,7 +110,6 @@ graph TD
 
 ## 📸 Demo
 
-*(Add a screenshot here of your React UI showing the "News Cards" at the top and the "Agent Neural Log" sidebar)*
 
 ---
 
