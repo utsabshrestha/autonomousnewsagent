@@ -28,11 +28,14 @@ const StatusFeed = ({ topic, queries, foundUrls, currentAction }) => {
             <div className="step-content">
               <h3>Searching</h3>
               <div className="query-pills">
-                {queries.map((q, i) => (
+                {queries.slice(0, 3).map((q, i) => (
                   <div key={i} className="pill">
                     <Search size={12} /> {q}
                   </div>
                 ))}
+                {queries.length > 3 && (
+                    <div className="more-count">...and {queries.length - 3} more</div>
+                )}
               </div>
             </div>
           </div>
