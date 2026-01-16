@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}-Agent # Creates repo-name-Agent
+  IMAGE_NAME: ${{ github.repository }}-agent # Creates repo-name-Agent
 
 jobs:
   build-and-push:
