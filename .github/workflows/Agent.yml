@@ -23,6 +23,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # --- NEW STEP: Setup QEMU (Allows building for ARM on Intel machines) ---
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       # 2. Log in to GitHub Container Registry
       # We use the automatic GITHUB_TOKEN (you don't need to create this secret)
       - name: Log in to the Container registry
@@ -43,6 +50,8 @@ jobs:
           context: ./Agent # Important: Point to the Agent folder!
           push: true
           # Tags the image as 'latest' and also with the short git commit hash (sha)
+          # --- NEW LINE: Build for both Standard Server and Apple Silicon ---
+          platforms: linux/amd64,linux/arm64
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
