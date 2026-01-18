@@ -55,3 +55,32 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            
+      # 5. Write commit hash in the kubernetes manifest file
+      - name: Update Kubernetes resources
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          
+          # We construct the full new image string using the lowercase env var
+          NEW_IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          
+          # Debug: Print what we are trying to set
+          echo "Updating agent.yaml to use image: $NEW_IMAGE"
+          
+          # ROBUST SED COMMAND:
+          # Find any line containing "autonomousnewsagent-agent" (ignoring what comes before it)
+          # Replace the whole line with the new image
+          sed -i "s|image: .*autonomousnewsagent-agent.*|image: $NEW_IMAGE|" k8s/agent.yaml
+          
+          # Check if it worked by printing the file content
+          cat k8s/agent.yaml | grep "image:"
+          
+          # Commit and Push
+          if [[ -n $(git status -s) ]]; then
+            git add k8s/agent.yaml
+            git commit -m "Update Agent image to ${{ github.sha }}"
+            git push
+          else
+            echo "No changes to commit"
+          fi
