@@ -13,7 +13,7 @@ if not BRAVE_API_KEY:
     print("Make sure you've sourced your .zshrc or .env file")
     exit(1)
 
-def search_brave_news(query : str, count=5):
+def search_brave_news(query : str, count=6):
     try:
         """
         Searches Brave News API for the latest news links.

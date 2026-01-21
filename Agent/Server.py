@@ -30,7 +30,7 @@ async def run_agent(topic: str):
 @app.get("/health")
 async def health_check():
     health_status = {
-        "status": "healthy",
+        "Agentstatus": "healthy",
         "service": "autonomous-news-agent",
         "gemini_api": "unknown"
     }
@@ -42,10 +42,10 @@ async def health_check():
             health_status["gemini_api"] = "healthy"
         else:
             health_status["gemini_api"] = "unhealthy"
-            health_status["status"] = "degraded"
+            health_status["Agentstatus"] = "degraded"
     except Exception as e:
         health_status["gemini_api"] = f"error: {str(e)}"
-        health_status["status"] = "degraded"
+        health_status["Agentstatus"] = "degraded"
     
     return health_status
 
