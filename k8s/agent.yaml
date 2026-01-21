@@ -16,7 +16,7 @@ spec:
       containers:
         - name: agent-container
           # REPLACE 'YOUR_GITHUB_USERNAME' BELOW!
-          image: ghcr.io/utsabshrestha/autonomousnewsagent-agent:f3c14171c0a0b7fb4b6ad3d3928dca6198b7c7a6
+          image: ghcr.io/utsabshrestha/autonomousnewsagent-agent:5eec303caacce42ed5ea10ac291d10d7aa9cdc03
           # This tells K8s to always check if there is a newer version
           imagePullPolicy: Always 
           ports:
