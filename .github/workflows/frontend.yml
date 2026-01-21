@@ -15,7 +15,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -51,3 +51,26 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Update Kubernetes resources
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          
+          # Construct the new image name
+          NEW_IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          
+          echo "Updating frontend.yaml to use image: $NEW_IMAGE"
+          
+          # Find the line containing "autonomousnewsagent-frontend" and replace it
+          sed -i "s|image: .*autonomousnewsagent-frontend.*|image: $NEW_IMAGE|" k8s/frontend.yaml
+          
+          cat k8s/frontend.yaml | grep "image:"
+          
+          if [[ -n $(git status -s) ]]; then
+            git add k8s/frontend.yaml
+            git commit -m "Update Frontend image to ${{ github.sha }}"
+            git push
+          else
+            echo "No changes to commit"
+          fi
