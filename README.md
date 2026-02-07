@@ -19,6 +19,13 @@ An autonomous AI agent that acts as a digital investigative journalist. Unlike s
 *   **Multimedia Synthesis:** Extracts hero images from news sources to create a visual "News Card" interface alongside the text report.
 
 ---
+Screenshots : 
+<img width="1057" height="600" alt="image" src="https://github.com/user-attachments/assets/ebe3411c-e316-42e5-8042-b0ac2d9ed43e" />
+<img width="1064" height="610" alt="image" src="https://github.com/user-attachments/assets/f68368c1-9b10-4745-805f-ec1b389a63d1" />
+<img width="1071" height="611" alt="image" src="https://github.com/user-attachments/assets/c5b72ac4-74ca-46c5-b66b-09ba03833d9a" />
+
+* Check out the demo video: https://github.com/user-attachments/assets/abbf0d77-22c1-4380-8d89-4dc7c43624f5
+---
 
 ## Tech Stack
 
@@ -105,8 +112,6 @@ Evaluator o-.-o Gemini
     *   *If >= 6 valid sources:* Proceed to scraping.
 5.  **Scraper:** Extracts main text and Hero Images using Regex + JinaAi.
 6.  **Reporter:** Synthesizes a markdown report with Harvard-style inline citations `[1]`.
-
----
 
 
 ---
