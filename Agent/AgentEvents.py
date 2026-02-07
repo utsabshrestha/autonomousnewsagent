@@ -12,13 +12,15 @@ async def news_event_stream_generator(topic: str):
         for node_name, state_update in event.items():
             if node_name == "planner":
                 queries = state_update.get("search_queries",[])
+                loop_step = state_update.get("loop_step", 0)
                 query_list = [q["query"] for q in queries]
 
                 data = {
                     "type": "log", 
                     "step": "planner", 
                     "message": f"Generated {len(query_list)} search queries",
-                    "details": query_list # <--- SEND THE LIST
+                    "details": query_list, # <--- SEND THE LIST,
+                    "loop": loop_step
                 }
                 yield f"data: {json.dumps(data)}\n\n"
                 
@@ -30,12 +32,13 @@ async def news_event_stream_generator(topic: str):
                 unique_results = state_update.get("refined_search_results", [])
                 # Send the list of found sources (Title + URL)
                 source_list = [{"title": r["title"], "url": r["url"]} for r in unique_results]
-                
+                loop_step = state_update.get("loop_step", 0)
                 data = {
                     "type": "log", 
                     "step": "sources", 
                     "message": f"Found {len(source_list)} potential sources",
-                    "details": source_list # <--- SEND THE SOURCES
+                    "details": source_list, # <--- SEND THE SOURCES
+                    "loop": loop_step
                 }
                 yield f"data: {json.dumps(data)}\n\n"
 

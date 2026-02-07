@@ -46,6 +46,7 @@ def PlannerNode(state: AgentState) -> dict :
     1. Focus on the most recent events ({year - 1}-{year}).
     2. Create queries that will find factual news articles, not opinion blogs.
     3. Vary the queries to cover different angles (e.g., financial impact, political response, key events).
+    4. User's Topic can sometimes be vague, or not related to news or recent days, in that case, if you have any knowledge about the user's topic, you can make the best query as per your knowledge that served web search, in this case you don't have to put the date on the search query.
     
     IMPORTANT: You must return ONLY a raw JSON list of strings. Do not add Markdown formatting.
     Example output: ["query 1", "query 2", "query 3", "query 4"]
@@ -195,6 +196,7 @@ def SearchResultsEvaluationNode(state: AgentState) -> dict:
     1. Highly relevant to the User Topic.
     2. From reputable news sources (avoid ads, login pages, or unrelated blogs).
     3. Recent ({year-1}-{year} context).
+    4. Exception cases, if the User's topic is vague or not related to the news and just general search, you can verify the search results based on the knowledge you have regarding the User's topic, in this cases dates might not need to be considered.
 
     Return the output as a JSON object with a single key "relevant_id" containing the list of Id as string of the good results.
     Id is given in the search results json.
