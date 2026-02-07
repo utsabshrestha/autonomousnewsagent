@@ -15,7 +15,7 @@ spec:
       containers:
         - name: frontend-container
           # REPLACE WITH YOUR ACTUAL USERNAME (keep lowercase)
-          image: ghcr.io/utsabshrestha/autonomousnewsagent-frontend:6773ed1596e317bdc4b89630fa75dd4550796c8e
+          image: ghcr.io/utsabshrestha/autonomousnewsagent-frontend:ad30882b8b5b414ec49baf08dde3b6c3d94955e8
           imagePullPolicy: Always
           ports:
             - containerPort: 80 # Nginx runs on port 80 inside the container
