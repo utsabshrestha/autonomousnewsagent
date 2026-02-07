@@ -38,15 +38,30 @@ export const useAgentStream = () => {
     
                 if(parsedData.type === 'log'){
                     if (parsedData.step === 'planner') {
-                        setSearchQueries(parsedData.details);
-                        setCurrentAction("Generating Search Queries...");
+                        const loop = parsedData.loop;
+                        const newQueries = parsedData.details;
+                        setSearchQueries(prev => [...prev, newQueries]);
+                        if(loop > 1){
+                            setCurrentAction("Regenerating Search Queries...");
+                        }else{
+                            setCurrentAction("Generating Search Queries...");
+                        }
                     } 
                     else if (parsedData.step === 'sources') {
-                        setFoundUrls(parsedData.details);
-                        setCurrentAction("Reviewing Sources...");
+                        const loop = parsedData.loop;
+                        const newSources = parsedData.details;
+                        setFoundUrls(prevSources => [...prevSources, newSources]);
+                        if(loop > 1){
+                            setCurrentAction("Reviewing more Sources...");
+                        }else{
+                            setCurrentAction("Reviewing Sources...");
+                        }
                     }
                     else if (parsedData.step === 'scraping') {
                         setCurrentAction(`Reading: ${new URL(parsedData.details).hostname}...`);
+                    }
+                    else{
+                        setCurrentAction(parsedData.message);
                     }
                 
                 }else if(parsedData.type === 'result'){

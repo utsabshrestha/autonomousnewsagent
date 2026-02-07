@@ -434,6 +434,17 @@ body {
   align-items: center;
   gap: 10px;
   font-size: 0.85rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.mini-source-card:hover {
+  background: #e0f2fe;
+  border-color: #0284c7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .favicon {
@@ -465,4 +476,16 @@ body {
   font-size: 0.8rem;
   color: #94a3b8;
   margin-top: 5px;
+}
+
+.more-count.clickable {
+  color: #0284c7;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.more-count.clickable:hover {
+  color: #0369a1;
 }
