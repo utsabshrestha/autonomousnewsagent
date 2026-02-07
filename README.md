@@ -26,7 +26,7 @@ An autonomous AI agent that acts as a digital investigative journalist. Unlike s
 *   **LLM Brain:** Google Gemini 2.0 Flash (1M Context Window)
 *   **Search & Data:** Brave Search API (Discovery) + Jina AI (Scraping)
 *   **Backend:** FastAPI (Python) with Streaming Response
-*   **Frontend:** React Js + Markdown Rendering
+*   **Frontend:** React.Js + Markdown Rendering
 
 ---
 
@@ -97,11 +97,11 @@ Evaluator o-.-o Gemini
 
 ### Node Breakdown
 
-1.  **Planner Node:** Analyzes the user request and generates upto 3 or more specific search queries (e.g., converting "Apple news" to "Apple stock performance Q4 2025").
-2.  **Search & Dedupe:** Fetches results in parallel Search Nodes using Brave Search API, gather all the results and removes duplicates or previously rejected URLs (Blacklisting).
+1.  **Planner Node:** Analyzes the user request and generates up to 3 or more specific search queries (e.g., converting "Apple news" to "Apple stock performance Q4 2025").
+2.  **Search & Dedupe:** Fetches results in parallel Search Nodes using Brave Search API, gathers all the results and removes duplicates or previously rejected URLs (Blacklisting).
 3.  **Evaluator (The Critic):** An LLM call that judges snippets. It separates "Signal" from "Noise."
 4.  **Router (The Switch):**
-    *   *If < 6 valid sources:* Loop back to **Planner** with instructions to try new keywords and not use the previoulsy used search queries.
+    *   *If < 6 valid sources:* Loop back to **Planner** with instructions to try new keywords and not use the previously used search queries.
     *   *If >= 6 valid sources:* Proceed to scraping.
 5.  **Scraper:** Extracts main text and Hero Images using Regex + JinaAi.
 6.  **Reporter:** Synthesizes a markdown report with Harvard-style inline citations `[1]`.
@@ -121,8 +121,8 @@ Evaluator o-.-o Gemini
 ### Backend
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/news-agent.git
-cd news-agent/Agent
+git clone https://github.com/yourusername/autonomousnewsagent.git
+cd autonomousnewsagent/Agent
 
 # Install dependencies
 pip install -r requirements.txt
@@ -141,7 +141,7 @@ npm start
 ---
 
 ## What I Learned
-* **LangGraph Implementation:** I learned how to utilize langgraph to develope different nodes that have its own cognitive power, how to use langgraph to orchestrate different nodes and build and AI Agent utilizing the state of the art LLM like Gemini.
+* **LangGraph Implementation:** I learned how to utilize langgraph to develop different nodes that have its own cognitive power, how to use langgraph to orchestrate different nodes and build an AI Agent utilizing the state of the art LLM like Gemini.
 *   **State Management in AI:** How to use `TypedDict` and `operator.add` to maintain context across multiple autonomous loops.
 *   **Conditional Routing:** Implementing logic gates in graphs to handle failure states (e.g., "Search yielded 0 results").
 *   **Streaming Patterns:** Handling asynchronous data streams to push "Thought Logs" to the UI for better UX.
