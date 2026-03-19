@@ -24,6 +24,9 @@ Screenshots :
 <img width="1064" height="610" alt="image" src="https://github.com/user-attachments/assets/f68368c1-9b10-4745-805f-ec1b389a63d1" />
 <img width="1071" height="611" alt="image" src="https://github.com/user-attachments/assets/c5b72ac4-74ca-46c5-b66b-09ba03833d9a" />
 
+<video src="https://github.com/user-attachments/assets/abbf0d77-22c1-4380-8d89-4dc7c43624f5" controls="controls" muted="muted" autoplay="autoplay" loop="loop" style="max-width: 100%;">
+</video>
+
 * Check out the demo video: https://github.com/user-attachments/assets/abbf0d77-22c1-4380-8d89-4dc7c43624f5
 ---
 
